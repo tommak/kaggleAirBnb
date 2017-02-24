@@ -4,37 +4,6 @@ from os.path import isfile
 from sklearn.cross_validation import train_test_split
 
 
-# users = pd.read_csv('data/train_users_2.csv')
-# sessions = pd.read_csv('data/sessions.csv')
-# test_users = pd.read_csv('data/test_users.csv') 
-# agg_actions_info = pd.read_csv('data/agg_actions_info.csv')
-
-
-# agg_actions_info["agg_action_code_gr"] = agg_actions_info.agg_action_code
-# agg_actions_info.loc[agg_actions_info.perc_users < 0.01, "agg_action_code_gr"] = "agg_action_other" 
-# key_words = ["host", "book", "wishlist", "reserv"]
-# key_words.extend(["transl", "coupon"])
-# for key_word in key_words:
-#     key_word_rows = agg_actions_info.aggr_action.str.contains(r'[\W_]+' + key_word)
-#     agg_actions_info.loc[key_word_rows & (agg_actions_info.perc_users < 0.01), "agg_action_code_gr"] = "agg_action_other_" + key_word
-    
-	
-# sessions_aggr_coded = pd.merge(sessions, agg_actions_info[["action", "action_type", "action_detail", "agg_action_code_gr"]], how="left", on = ["action", "action_type", "action_detail"])
-
-# P1 = sessions_aggr_coded.pivot_table(index="user_id", columns="agg_action_code_gr", values="secs_elapsed", aggfunc=np.size)
-# P2 = sessions_aggr_coded.groupby("user_id")["secs_elapsed"].agg({"duration" : np.sum, "num_actions" : np.size})
-# P3 = sessions_aggr_coded.pivot_table(index="user_id", columns="device_type", values="secs_elapsed", aggfunc=np.size)
-
-# sessions_pivot = pd.merge(pd.merge(P1, P2, left_index=True, right_index=True), P3,
-#                           left_index=True, right_index=True)
-						  
-# users_ses = pd.merge(users, sessions_pivot, how="left", left_on = "id", right_index=True)
-# test_users_ses = pd.merge(test_users, sessions_pivot, how="left", left_on = "id", right_index=True)
-
-# users_ses.to_csv("data\users_ses_rd1.csv", index=False)
-# test_users_ses.to_csv("data\\test_users_ses_rd1.csv", index=False)
-# agg_actions_info.to_csv("data\\agg_actions_info_rd1.csv", index=False) 
-
 def read_users_ses(users_fname, sessions_fname, merger, merged_fname, actions_fname=None):
 	"""
 		Merge users and sessions data sets or read from existing file

@@ -5,9 +5,6 @@ from time import time
 from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from  sklearn.ensemble import GradientBoostingClassifier
-#from xgboost.sklearn import XGBClassifier
-from xgboost import XGBClassifier
-
 from  cleaning import clean_manage_kaggle, clean_manage_kaggle_v1, clean_manage_users_ses, \
 					clean_manage_users_ses_ind, clean_manage_users_ses_ext, clean_manage_users_ses_FE, \
 					clean_manage_users_ses_FE_1, prepare_data
@@ -15,6 +12,11 @@ from  cleaning import clean_manage_kaggle, clean_manage_kaggle_v1, clean_manage_
 from  cross_validation import cross_validation_ndcg_score
 from preprocess import read_users_ses, split_users, users_ses_merge
 import itertools
+
+try:
+	from xgboost.sklearn import XGBClassifier
+except ImportError:
+	from xgboost import XGBClassifier
 
 def calc_model_runs(data, target, clf, parameters, res_file):
 	df_res = pd.DataFrame([], columns = parameters.keys() + ["score"])
@@ -60,7 +62,7 @@ if __name__ == "__main__":
 
 	#Setup ranges for algorithm parameter variation 
 	parameters ={
-		"max_depth" : [3, 6, 8, 10],
+		"max_depth" : [8],
 		"n_estimators" : [90],
 		"learning_rate" : [0.1],
 		"subsample" : [0.5],
@@ -69,21 +71,9 @@ if __name__ == "__main__":
 		"seed" : [0]
 	}
 
-	calc_model_runs(algo_df, "country_destination", XGBClassifier, parameters, "xgb_parvar_add.csv")
+	calc_model_runs(algo_df, "country_destination", XGBClassifier, parameters, "xgb_parvar_fnl.csv")
 
-	# parameters ={
-	# 	"max_depth" : [6],
-	# 	"n_estimators" : [40],
-	# 	"learning_rate" : [0.15],
-	# 	"subsample" : [0.5]
-		
-	# }
-
-	# calc_model_runs(algo_df, "country_destination", GradientBoostingClassifier, parameters, "test_algorithm_smpl_sklearn.csv")
-
-
-
-
+	
 	parameters ={
 		"n_estimators" : [100, 200, 300, 400],
 		"max_features" : [150]

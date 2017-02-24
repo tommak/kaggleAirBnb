@@ -1,3 +1,4 @@
+import pandas as pd
 
 def get_levels_stat(df, excl_fields=None):
     res = pd.DataFrame([], columns=["field", "level", "count", "perc"])

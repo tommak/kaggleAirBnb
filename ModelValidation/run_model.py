@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from math import log
 from sklearn.preprocessing import LabelEncoder
-from xgboost.sklearn import XGBClassifier
 import pickle 
 from time import time
 
@@ -11,6 +10,11 @@ from cleaning import clean_manage_v1, clean_manage_kaggle, clean_manage_v2, clea
 from preprocess import split_users, read_users_ses, users_ses_merge, get_sample_weight
 from cross_validation import score_predictions
 import getopt, sys
+
+try:
+	from xgboost.sklearn import XGBClassifier
+except ImportError:
+	from xgboost import XGBClassifier
 
 
 def load_or_fit(clf, X, y, path, dump_new=True, features_list=None, features_path=None, sample_weight=None):
