@@ -3,6 +3,10 @@ from __future__ import division
 import pandas as pd
 import numpy as np
 import math
+import xgboost as xgb
+import matplotlib.pyplot as plt
+
+
 from cross_validation import score_predictions
 from scipy.stats import mannwhitneyu
 from scipy.stats import ttest_ind
@@ -128,3 +132,22 @@ def perform_ttest(ranks):
     return res
 
 
+def plot_importance(fitted_clf, features, top):
+	fig, [ax1,ax2] = plt.subplots(1,2, figsize=(12,5))
+
+	xgb.plot_importance(fitted_clf, max_num_features=top, importance_type="weight",
+                        title="Feature Importance \n(by number of times a feature appears in a tree\n",
+                        ax=ax1)
+	labels1 = [item.get_text() for item in ax1.get_yticklabels()]
+	flabels1 = map(lambda v: features[int(v[1:])],labels1)
+	ax1.set_yticklabels(flabels1)
+
+	xgb.plot_importance(fitted_clf, max_num_features=top, importance_type="gain",
+	                        title="Feature Importance \n(by average gain of splits which use the feature\n",
+	                        ax=ax2)
+	labels2 = [item.get_text() for item in ax2.get_yticklabels()]
+	flabels2 = map(lambda v: features[int(v[1:])],labels2)
+	ax2.set_yticklabels(flabels2)
+
+	plt.subplots_adjust(wspace = 0.8)
+	plt.show()
