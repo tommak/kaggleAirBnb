@@ -14,10 +14,12 @@ $ conda env create -f environment.yml
 However this will install quite old xgboost version. Code will be run correctly, but some features from analysis (plotting of feature importance) will be missed. In order to get newer version of xgboost, one can follow this [instructions](http://xgboost.readthedocs.io/en/latest/build.html).
 
 **Data**
+
 Data can be downloaded from [here]( [https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/data](https://www.kaggle.com/c/airbnb-recruiting-new-user-bookings/data)).
 Please note that file with train users data (&#39;train\_users\_2.csv&#39;) should be named users.csv, test users (data for submission) should be named &#39;submission\_users.csv&#39;.
 
 **Code**
+
 _par\_variator.py_
 Calculate cross validation results for specified classifier and range of parameters.
 
